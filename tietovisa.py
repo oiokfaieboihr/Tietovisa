@@ -126,7 +126,7 @@ class Quiz:
 		width=5,bg="black", fg="white",font=("ariel",16," bold"))
 		
 		# placing the Quit button on the screen
-		quit_button.place(x=700,y=50)
+		quit_button.place(x=750,y=50)
 
 
 	# This method deselect the radio button on the screen
@@ -161,7 +161,7 @@ class Quiz:
 	def display_title(self):
 		
 		# The title to be shown
-		title = Label(gui, text="GeeksforGeeks QUIZ",
+		title = Label(gui, text="Tietovisa",
 		width=50, bg="green",fg="white", font=("ariel", 20, "bold"))
 		
 		# place of the title
@@ -203,10 +203,12 @@ class Quiz:
 gui = Tk()
 
 # set the size of the GUI Window
-gui.geometry("800x450")
+gui.geometry("850x450")
+
+gui.resizable(0, 0) 
 
 # set the title of the Window
-gui.title("GeeksforGeeks Quiz")
+gui.title("Tietovisa")
 
 # get the data from the json file
 with open('data.json') as f:
