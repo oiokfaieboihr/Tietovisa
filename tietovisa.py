@@ -226,9 +226,6 @@ class Quiz:
 
 
 class Menu:
-
-
-	#quiz = Quiz()
 	def __init__(self):
 		self.display_title()
 		self.display_guide()
@@ -261,7 +258,6 @@ class Menu:
 	def history(self):
 		self.clear()
 		Quiz()
-
 	def mixed(self):
 		self.clear()
 		Quiz()
