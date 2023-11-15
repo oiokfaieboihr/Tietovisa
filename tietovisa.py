@@ -10,7 +10,7 @@ from tkinter import messagebox as mb
 #import json to use json file for data
 import json
 
-from random import randrange
+import random
 
 #class to define the components of the GUI
 class Quiz:
@@ -24,6 +24,16 @@ class Quiz:
 		# set question number to 0
 		self.q_no=0
 		self.end=0
+
+		self.random_list = []
+		
+		self.inputNumbers =range(0,4)
+
+		self.random_list = random.sample(self.inputNumbers, 4)
+
+
+		print(self.random_list)
+
 		
 		# assigns ques to the display_question function to update later.
 		self.display_title()
@@ -91,10 +101,15 @@ class Quiz:
 			self.correct += 1
 		
 		# Moves to next Question by incrementing the q_no counter
-		self.q_no = randrange(0, 4)
+
+
+		self.q_no = self.random_list[self.end]
+
+		print(self.random_list[self.end])
+		
 		self.end+=1
 
-		print(self.q_no)
+		
 		
 		# checks if the q_no size is equal to the data size
 		if self.end==self.data_size:
