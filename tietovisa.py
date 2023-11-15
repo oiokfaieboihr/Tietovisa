@@ -228,15 +228,28 @@ class Quiz:
 
 
 class Menu:
-	quiz = Quiz()
+	#quiz = Quiz()
 	def __init__(self):
 		self.display_title()
 		self.display_question()
+		#self.display_menu()
 
+	def display_title(self):
+		
+		# The title to be shown
+		title = Label(gui, text="Menu",
+		width=50, bg="blue",fg="white", font=("ariel", 20, "bold"))
+		# place of the title
+		title.place(x=0, y=2)
 
-
-
-
+	def display_question(self):
+		
+		# setting the Question properties
+		q = Label(gui, text="Tervetuloa perustietovisaan", width=60,
+		font=( 'ariel' ,16, 'bold' ), anchor= 'w' )
+		
+		#placing the option on the screen
+		q.place(x=275, y=50)
 
 
 
