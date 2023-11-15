@@ -12,6 +12,9 @@ import json
 
 import random
 
+
+
+
 #class to define the components of the GUI
 class Quiz:
 	# This is the first method which is called when a
@@ -219,6 +222,22 @@ class Quiz:
 		
 		# return the radio buttons
 		return q_list
+	
+
+
+
+
+class Menu:
+
+
+
+
+
+
+
+
+	
+	quiz = Quiz()
 
 # Create a GUI Window
 gui = Tk()
@@ -241,7 +260,7 @@ options = (data['options'])
 answer = (data[ 'answer'])
 
 # create an object of the Quiz Class.
-quiz = Quiz()
+menu = Menu()
 
 # Start the GUI
 gui.mainloop()
