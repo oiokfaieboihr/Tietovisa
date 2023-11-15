@@ -1,6 +1,7 @@
 # Python program to create a simple GUI
 # Simple Quiz using Tkinter
 
+import tkinter as tk
 #import everything from tkinter
 from tkinter import *
 
@@ -11,9 +12,6 @@ from tkinter import messagebox as mb
 import json
 
 import random
-
-
-
 
 #class to define the components of the GUI
 class Quiz:
@@ -228,29 +226,89 @@ class Quiz:
 
 
 class Menu:
+
+
 	#quiz = Quiz()
 	def __init__(self):
 		self.display_title()
-		self.display_question()
+		self.display_guide()
+		self.display_buttons()
 		#self.display_menu()
 
 	def display_title(self):
 		
 		# The title to be shown
-		title = Label(gui, text="Menu",
+		title = Label(frame, text="Tietovisa",
 		width=50, bg="blue",fg="white", font=("ariel", 20, "bold"))
 		# place of the title
 		title.place(x=0, y=2)
 
-	def display_question(self):
+	def display_guide(self):
 		
 		# setting the Question properties
-		q = Label(gui, text="Tervetuloa perustietovisaan", width=60,
-		font=( 'ariel' ,16, 'bold' ), anchor= 'w' )
+		q = Label(frame, text="Valitse aihe:",
+		width=71, fg="black", font=("ariel", 14, "bold"))
 		
 		#placing the option on the screen
-		q.place(x=275, y=50)
+		q.place(x=0, y=50)
 
+	def math(self):
+		self.clear()
+		Quiz()
+	def geography(self):
+		self.clear()
+		Quiz()
+	def history(self):
+		self.clear()
+		Quiz()
+
+	def mixed(self):
+		self.clear()
+		Quiz()
+
+	def clear(self):
+		for widgets in frame.winfo_children():
+			widgets.destroy()
+
+
+	def display_buttons(self):
+		
+		# The first button is the Next button to move to the
+		# next Question
+		math = Button(frame, text="Matikka",command=self.math,
+		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
+		
+		# placing the button on the screen
+		math.place(x=355,y=100)
+
+		# The first button is the Next button to move to the
+		# next Question
+		geo = Button(frame, text="Maantieto",command=self.geography,
+		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
+		
+		# placing the button on the screen
+		geo.place(x=355,y=150)
+
+		# The first button is the Next button to move to the
+		# next Question
+		history = Button(frame, text="Historia",command=self.history,
+		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
+		
+		# placing the button on the screen
+		history.place(x=355,y=200)
+
+		mixed = Button(frame, text="Seka",command=self.mixed,
+		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
+		
+		# placing the button on the screen
+		mixed.place(x=355,y=250)
+		
+		# This is the second button which is used to Quit the GUI
+		quit_button = Button(frame, text="Quit", command=gui.destroy,
+		width=5,bg="black", fg="white",font=("ariel",16," bold"))
+		
+		# placing the Quit button on the screen
+		quit_button.place(x=750,y=50)
 
 
 
@@ -262,6 +320,10 @@ gui = Tk()
 gui.geometry("850x450")
 
 gui.resizable(0, 0) 
+
+
+frame = Frame(gui)
+frame.pack(side="top", expand=True, fill="both")
 
 # set the title of the Window
 gui.title("Tietovisa")
