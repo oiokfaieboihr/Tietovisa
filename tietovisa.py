@@ -62,7 +62,7 @@ class Quiz:
 		result = f"Score: {score}%"
 		
 		# Shows a message box to display the result
-		mb.showinfo("Ressult", f"{result}\n{correct}\n{wrong}")
+		mb.showinfo("Result", f"{result}\n{correct}\n{wrong}")
 
 
 	# This method checks the Answer after we click on Next.
