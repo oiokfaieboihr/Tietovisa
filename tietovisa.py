@@ -228,16 +228,19 @@ class Quiz:
 
 
 class Menu:
-
-
-
-
-
-
-
-
-	
 	quiz = Quiz()
+	def __init__(self):
+		self.display_title()
+		self.display_question()
+
+
+
+
+
+
+
+
+
 
 # Create a GUI Window
 gui = Tk()
