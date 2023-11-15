@@ -3,13 +3,25 @@
       "What Indian city is the capital of two states?",
       "Which city is the capital of India?",
       "Smallest State of India?",
-      "Where is Taj Mahal Located?"
+      "Where is Taj Mahal Located?",
+      "What Indian city is the capital of two states?",
+      "Which city is the capital of India?",
+      "Smallest State of India?",
+      "Where is Taj Mahal Located?",
+      "What Indian city is the capital of two states?",
+      "Which city is the capital of India?"
     ],
     "answer": [
       1,
       2,
       3,
-      2
+      2,
+      1,
+      2,
+      3,
+      2,
+      1,
+      3
     ],
     "options": [
   
@@ -27,6 +39,36 @@
         "Punjab",
         "Goa",
         "Bihar"
+      ],
+      ["Lucknow",
+        "Agra",
+        "Bhopal",
+        "Delhi"
+      ],
+      ["Lucknow",
+        "Agra",
+        "Bhopal",
+        "Delhi"
+      ],
+      ["Lucknow",
+        "Agra",
+        "Bhopal",
+        "Delhi"
+      ],
+      ["Lucknow",
+        "Agra",
+        "Bhopal",
+        "Delhi"
+      ],
+      ["Lucknow",
+        "Agra",
+        "Bhopal",
+        "Delhi"
+      ],
+      ["Lucknow",
+        "Agra",
+        "Bhopal",
+        "Delhi"
       ],
       ["Lucknow",
         "Agra",

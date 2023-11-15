@@ -24,12 +24,13 @@ class Quiz:
 		# set question number to 0
 		self.q_no=0
 		self.end=0
+		self.questions=10
 
 		self.random_list = []
 		
-		self.inputNumbers =range(0,4)
+		self.inputNumbers =range(0,self.questions)
 
-		self.random_list = random.sample(self.inputNumbers, 4)
+		self.random_list = random.sample(self.inputNumbers, self.questions)
 
 
 		print(self.random_list)
@@ -106,7 +107,7 @@ class Quiz:
 		self.q_no = self.random_list[self.end]
 
 		print(self.random_list[self.end])
-		
+
 		self.end+=1
 
 		
