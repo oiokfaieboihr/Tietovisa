@@ -10,6 +10,8 @@ from tkinter import messagebox as mb
 #import json to use json file for data
 import json
 
+from random import randrange
+
 #class to define the components of the GUI
 class Quiz:
 	# This is the first method which is called when a
@@ -21,6 +23,7 @@ class Quiz:
 		
 		# set question number to 0
 		self.q_no=0
+		self.end=0
 		
 		# assigns ques to the display_question function to update later.
 		self.display_title()
@@ -88,10 +91,13 @@ class Quiz:
 			self.correct += 1
 		
 		# Moves to next Question by incrementing the q_no counter
-		self.q_no += 1
+		self.q_no = randrange(0, 4)
+		self.end+=1
+
+		print(self.q_no)
 		
 		# checks if the q_no size is equal to the data size
-		if self.q_no==self.data_size:
+		if self.end==self.data_size:
 			
 			# if it is correct then it displays the score
 			self.display_result()
@@ -162,8 +168,7 @@ class Quiz:
 		
 		# The title to be shown
 		title = Label(gui, text="Tietovisa",
-		width=50, bg="green",fg="white", font=("ariel", 20, "bold"))
-		
+		width=50, bg="blue",fg="white", font=("ariel", 20, "bold"))
 		# place of the title
 		title.place(x=0, y=2)
 
