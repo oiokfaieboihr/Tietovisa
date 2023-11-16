@@ -279,8 +279,8 @@ class Menu:
 		Quiz()
 	def mixed(self):
 		self.clear()
-		Menu.startpos = 90
-		Menu.range = 120
+		Menu.startpos = 0
+		Menu.range = 90
 		Quiz()
 
 	def clear(self):
@@ -322,7 +322,7 @@ class Menu:
 		# placing the button on the screen
 		history.place(x=355,y=200)
 
-		mixed = Button(frame, text="Seka",command=self.mixed,
+		mixed = Button(frame, text="Sekoitus",command=self.mixed,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
 		
 		# placing the button on the screen
