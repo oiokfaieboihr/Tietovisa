@@ -107,7 +107,6 @@ class Quiz(Menu):
 		# Moves to next Question by incrementing the q_no counter
 
 		self.end+=1
-		self.q_no = self.random_list[self.end]
 
 		# print(self.q_no)
 		# print(self.random_list[self.end])
@@ -123,6 +122,7 @@ class Quiz(Menu):
 			# destroys the GUI
 			gui.destroy()
 		else:
+			self.q_no = self.random_list[self.end]
 			# shows the next question
 			self.display_question()
 			self.display_options()
@@ -261,7 +261,7 @@ class Menu:
 
 	def math(self):
 		self.clear()
-		self.startpos = 0
+		self.startpos = 1
 		Quiz()
 	def geography(self):
 		self.clear()
@@ -285,7 +285,8 @@ class Menu:
 
 	def on_scale_changed(val):
 		print(Menu.amount)
-		Menu.amount = val
+		
+		Menu.amount = int(val)
 
 	def display_buttons(self):
 		
@@ -348,7 +349,7 @@ gui.resizable(0, 0)
 frame = Frame(gui)
 frame.pack(side="top", expand=True, fill="both")
 
-scale = Scale(frame, from_=0, to=15, command=Menu.on_scale_changed,
+scale = Scale(frame, from_=1, to=15, command=Menu.on_scale_changed,
 font=("ariel",16,"bold"))
 scale.pack()
 scale.set('0')
