@@ -15,6 +15,8 @@
     "Calculate 16 √3 (rounded to the nearest integer).",
     "What is the sum of the first 8 positive integers?",
     "Determine the value of 6! (6 factorial).",
+
+
     "Mikä on maailman suurin valtio pinta-alaltaan?",
     "Missä sijaitsee Amazonin sademetsä?",
     "Mikä on maailman suurin valtameri?",
@@ -30,6 +32,8 @@
     "Missä sijaitsee Grand Canyon?",
     "Mikä on maailman syvin valtameren kohta?",
     "Missä valtiossa sijaitsee Machu Picchu?",
+
+
     "Milloin ensimmäinen maailmansota alkoi?",
     "Mikä on maailman vanhin sivilisaatio?",
     "Ketä kutsutaan Iranin Napoleoniksi?",
@@ -65,6 +69,8 @@
     3,
     1,
     3,
+
+
     4,
     4,
     4,
@@ -80,6 +86,8 @@
     4,
     4,
     4,
+
+
     3,
     1,
     4,
@@ -114,6 +122,8 @@
     ["A) 27", "B) 30", "C) 36", "D) 42"],
     ["A) 28", "B) 32", "C) 36", "D) 40"],
     ["A) 120", "B) 360", "C) 720", "D) 1440"],
+
+
     ["A) Venäjä", "B) Kiina", "C) Yhdysvallat", "D) Kanada"],
     ["A) Brasilia", "B) Kolumbia", "C) Peru", "D) Venezuela"],
     ["A) Atlantin valtameri", "B) Eteläinen jäämeri", "C) Tyyni valtameri", "D) Intian valtameri"],
@@ -129,6 +139,8 @@
     ["A) Arizona", "B) Colorado", "C) Utah", "D) New Mexico"],
     ["A) Mariananhaudan Challenger-syvyys", "B) Tonganhaudan Challenger-syvyys", "C) Puerto Ricon hauta", "D) Syyrian hauta"],
     ["A) Peru", "B) Bolivia", "C) Ecuador", "D) Kolumbia"],
+
+    
     ["A) 1911", "B) 1915", "C) 1914", "D) 1912"],
     ["A) Mesopotamia", "B) Egypti", "C) Intia", "D) Persia"],
     ["A) Cyrus the Great", "B) Darius I", "C) Babur", "D) Nader Shah"],
