@@ -25,15 +25,17 @@ class Quiz:
 		# set question number to 0
 		self.q_no=0
 		self.end=0
-		self.questions=10
+		self.questions=15
 
 		self.random_list = []
 		
-		self.inputNumbers =range(0,self.questions)
+		self.inputNumbers = range(0, self.questions)
 
 		self.random_list = random.sample(self.inputNumbers, self.questions)
 
+		self.q_no = self.random_list[self.end]
 
+		print(self.random_list[1])
 		print(self.random_list)
 
 		
@@ -56,7 +58,7 @@ class Quiz:
 		self.buttons()
 		
 		# no of questions
-		self.data_size=len(question)
+		self.data_size=self.questions
 		
 		# keep a counter of correct answers
 		self.correct=0
@@ -66,7 +68,6 @@ class Quiz:
 	# It counts the number of correct and wrong answers
 	# and then display them at the end as a message Box
 	def display_result(self):
-		
 		# calculates the wrong count
 		wrong_count = self.data_size - self.correct
 		correct = f"Correct: {self.correct}"
@@ -104,12 +105,10 @@ class Quiz:
 		
 		# Moves to next Question by incrementing the q_no counter
 
-
-		self.q_no = self.random_list[self.end]
-
-		print(self.random_list[self.end])
-
 		self.end+=1
+		self.q_no = self.random_list[self.end]
+		print(self.q_no)
+		print(self.random_list[self.end])
 
 		
 		
@@ -167,12 +166,14 @@ class Quiz:
 		for option in options[self.q_no]:
 			self.opts[val]['text']=option
 			val+=1
+			
 
 
 	# This method shows the current Question on the screen
 	def display_question(self):
 		
 		# setting the Question properties
+		print(self.q_no)
 		q_no = Label(gui, text=question[self.q_no], width=60,
 		font=( 'ariel' ,16, 'bold' ), anchor= 'w' )
 		
