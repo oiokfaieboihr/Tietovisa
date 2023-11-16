@@ -26,14 +26,16 @@ class Quiz(Menu):
 		self.q_no=0
 		self.end=0
 		print(Menu.amount)
-		self.questions = Menu.amount
-		startpos=0
+		print(Menu.startpos)
+		print("Value: ", Menu.range)
 
 		self.random_list = []
 		
-		self.inputNumbers = range(startpos, self.questions)
+		self.inputNumbers = range(Menu.startpos, Menu.range)
 
-		self.random_list = random.sample(self.inputNumbers, self.questions)
+		print("Value: ", self.inputNumbers)
+
+		self.random_list = random.sample(self.inputNumbers, Menu.amount)
 
 		self.q_no = self.random_list[self.end]
 
@@ -59,7 +61,7 @@ class Quiz(Menu):
 		self.buttons()
 		
 		# no of questions
-		self.data_size=self.questions
+		self.data_size=Menu.amount
 		
 		# keep a counter of correct answers
 		self.correct=0
@@ -111,7 +113,7 @@ class Quiz(Menu):
 		# print(self.q_no)
 		# print(self.random_list[self.end])
 
-		
+		print(self.end, self.data_size, Menu.range, self.q_no)
 		
 		# checks if the q_no size is equal to the data size
 		if self.end==self.data_size:
@@ -261,22 +263,24 @@ class Menu:
 
 	def math(self):
 		self.clear()
-		self.startpos = 1
+		Menu.startpos = 0
+		Menu.range = 30
 		Quiz()
 	def geography(self):
 		self.clear()
-		self.startpos = 15
-		self.questions = 30
+		Menu.startpos = 30
+		Menu.range = 60
+		print("Value: ", Menu.range)
 		Quiz()
 	def history(self):
 		self.clear()
-		self.startpos = 30
-		self.questions = 45
+		Menu.startpos = 60
+		Menu.range = 90
 		Quiz()
 	def mixed(self):
-		self.startpos = 45
-		self.questions = 60
 		self.clear()
+		Menu.startpos = 90
+		Menu.range = 120
 		Quiz()
 
 	def clear(self):
@@ -289,11 +293,7 @@ class Menu:
 		Menu.amount = int(val)
 
 	def display_buttons(self):
-		
-
-		print(scale.get())
-		
-		Menu.amount = 5
+		Menu.amount = 1
 		
 		# placing the button on the screen
 		scale.place(x=270,y=113)
