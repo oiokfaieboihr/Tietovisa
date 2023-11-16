@@ -14,7 +14,7 @@ import json
 import random
 
 #class to define the components of the GUI
-class Quiz:
+class Quiz(Menu):
 	# This is the first method which is called when a
 	# new object of the class is initialized. This method
 	# sets the question count to 0. and initialize all the
@@ -25,17 +25,18 @@ class Quiz:
 		# set question number to 0
 		self.q_no=0
 		self.end=0
-		self.questions=15
+		print(Menu.amount)
+		self.questions = Menu.amount
+		startpos=0
 
 		self.random_list = []
 		
-		self.inputNumbers = range(0, self.questions)
+		self.inputNumbers = range(startpos, self.questions)
 
 		self.random_list = random.sample(self.inputNumbers, self.questions)
 
 		self.q_no = self.random_list[self.end]
 
-		print(self.random_list[1])
 		print(self.random_list)
 
 		
@@ -107,8 +108,9 @@ class Quiz:
 
 		self.end+=1
 		self.q_no = self.random_list[self.end]
-		print(self.q_no)
-		print(self.random_list[self.end])
+
+		# print(self.q_no)
+		# print(self.random_list[self.end])
 
 		
 		
@@ -250,16 +252,30 @@ class Menu:
 		#placing the option on the screen
 		q.place(x=0, y=50)
 
+		# setting the Question properties
+		amount = Label(frame, text="Määrä:",
+		font=("ariel", 14, "bold"))
+		
+		#placing the option on the screen
+		amount.place(x=200, y=150)
+
 	def math(self):
 		self.clear()
+		self.startpos = 0
 		Quiz()
 	def geography(self):
 		self.clear()
+		self.startpos = 15
+		self.questions = 30
 		Quiz()
 	def history(self):
 		self.clear()
+		self.startpos = 30
+		self.questions = 45
 		Quiz()
 	def mixed(self):
+		self.startpos = 45
+		self.questions = 60
 		self.clear()
 		Quiz()
 
@@ -267,9 +283,20 @@ class Menu:
 		for widgets in frame.winfo_children():
 			widgets.destroy()
 
+	def on_scale_changed(val):
+		print(Menu.amount)
+		Menu.amount = val
 
 	def display_buttons(self):
 		
+
+		print(scale.get())
+		
+		Menu.amount = 5
+		
+		# placing the button on the screen
+		scale.place(x=270,y=113)
+
 		# The first button is the Next button to move to the
 		# next Question
 		math = Button(frame, text="Matikka",command=self.math,
@@ -318,9 +345,13 @@ gui.geometry("850x450")
 
 gui.resizable(0, 0) 
 
-
 frame = Frame(gui)
 frame.pack(side="top", expand=True, fill="both")
+
+scale = Scale(frame, from_=0, to=15, command=Menu.on_scale_changed,
+font=("ariel",16,"bold"))
+scale.pack()
+scale.set('0')
 
 # set the title of the Window
 gui.title("Tietovisa")
