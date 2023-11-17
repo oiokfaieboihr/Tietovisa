@@ -358,7 +358,7 @@ scale.set('0')
 gui.title("Tietovisa")
 
 # get the data from the json file
-with open('data.json') as f:
+with open('data.json', encoding='utf-8') as f:
 	data = json.load(f)
 
 # set the question, options, and answer
