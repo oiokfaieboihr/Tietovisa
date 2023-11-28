@@ -21,7 +21,9 @@ class Quiz(Menu):
 	# other methoods to display the content and make all the
 	# functionalities available
 	def __init__(self):
-		
+		frame2.pack_forget()
+		self.frame1 = Frame(gui)
+		self.frame1.pack(side="top", expand=True, fill="both")
 		# set question number to 0
 		self.q_no=0
 		self.end=0
@@ -66,6 +68,9 @@ class Quiz(Menu):
 		# keep a counter of correct answers
 		self.correct=0
 
+	def clear(self):
+		for widgets in self.frame1.winfo_children():
+			widgets.destroy()
 
 	# This method is used to display the result
 	# It counts the number of correct and wrong answers
@@ -81,7 +86,7 @@ class Quiz(Menu):
 		result = f"Score: {score}%"
 		
 		# Shows a message box to display the result
-		mb.showinfo("Result", f"{result}\n{correct}\n{wrong}")
+		mb.showinfo("Results", f"{result}\n{correct}\n{wrong}")
 
 
 	# This method checks the Answer after we click on Next.
@@ -121,8 +126,13 @@ class Quiz(Menu):
 			# if it is correct then it displays the score
 			self.display_result()
 			
-			# destroys the GUI
-			gui.destroy()
+			self.clear()
+			self.frame1.pack_forget()
+			
+			file = open("results.txt","a")
+
+			print( f"{self.correct} / {self.data_size}", file=file)
+			Menu()
 		else:
 			self.q_no = self.random_list[self.end]
 			# shows the next question
@@ -141,14 +151,14 @@ class Quiz(Menu):
 		
 		# The first button is the Next button to move to the
 		# next Question
-		next_button = Button(gui, text="Next",command=self.next_btn,
+		next_button = Button(self.frame1, text="Next",command=self.next_btn,
 		width=10,bg="blue",fg="white",font=("ariel",16,"bold"))
 		
 		# placing the button on the screen
 		next_button.place(x=350,y=380)
 		
 		# This is the second button which is used to Quit the GUI
-		quit_button = Button(gui, text="Quit", command=gui.destroy,
+		quit_button = Button(self.frame1, text="Quit", command=gui.destroy,
 		width=5,bg="black", fg="white",font=("ariel",16," bold"))
 		
 		# placing the Quit button on the screen
@@ -178,7 +188,7 @@ class Quiz(Menu):
 		
 		# setting the Question properties
 		print(self.q_no)
-		q_no = Label(gui, text=question[self.q_no], width=60,
+		q_no = Label(self.frame1, text=question[self.q_no], width=60,
 		font=( 'ariel' ,16, 'bold' ), anchor= 'w' )
 		
 		#placing the option on the screen
@@ -189,7 +199,7 @@ class Quiz(Menu):
 	def display_title(self):
 		
 		# The title to be shown
-		title = Label(gui, text="Tietovisa",
+		title = Label(self.frame1, text="Tietovisa",
 		width=50, bg="blue",fg="white", font=("ariel", 20, "bold"))
 		# place of the title
 		title.place(x=0, y=2)
@@ -211,7 +221,7 @@ class Quiz(Menu):
 		while len(q_list) < 4:
 			
 			# setting the radio button properties
-			radio_btn = Radiobutton(gui,text=" ",variable=self.opt_selected,
+			radio_btn = Radiobutton(self.frame1,text=" ",variable=self.opt_selected,
 			value = len(q_list)+1,font = ("ariel",14))
 			
 			# adding the button to the list
@@ -232,15 +242,25 @@ class Quiz(Menu):
 
 class Menu:
 	def __init__(self):
+		frame2.pack(side="top", expand=True, fill="both")
+		scale = Scale(frame2, from_=1, to=15, command=Menu.on_scale_changed,
+		font=("ariel",16,"bold"))
+		scale.pack()
+		scale.set('0')
+		scale.place(x=270,y=113)
 		self.display_title()
 		self.display_guide()
 		self.display_buttons()
 		#self.display_menu()
+	
+	def clear(self):
+		for widgets in frame2.winfo_children():
+			widgets.destroy()
 
 	def display_title(self):
 		
 		# The title to be shown
-		title = Label(frame, text="Tietovisa",
+		title = Label(frame2, text="Tietovisa",
 		width=50, bg="blue",fg="white", font=("ariel", 20, "bold"))
 		# place of the title
 		title.place(x=0, y=2)
@@ -248,14 +268,14 @@ class Menu:
 	def display_guide(self):
 		
 		# setting the Question properties
-		q = Label(frame, text="Valitse aihe:",
+		q = Label(frame2, text="Valitse aihe:",
 		width=71, fg="black", font=("ariel", 14, "bold"))
 		
 		#placing the option on the screen
 		q.place(x=0, y=50)
 
 		# setting the Question properties
-		amount = Label(frame, text="Määrä:",
+		amount = Label(frame2, text="Määrä:",
 		font=("ariel", 14, "bold"))
 		
 		#placing the option on the screen
@@ -283,10 +303,6 @@ class Menu:
 		Menu.range = 90
 		Quiz()
 
-	def clear(self):
-		for widgets in frame.winfo_children():
-			widgets.destroy()
-
 	def on_scale_changed(val):
 		print(Menu.amount)
 		
@@ -294,13 +310,10 @@ class Menu:
 
 	def display_buttons(self):
 		Menu.amount = 1
-		
-		# placing the button on the screen
-		scale.place(x=270,y=113)
 
 		# The first button is the Next button to move to the
 		# next Question
-		math = Button(frame, text="Matikka",command=self.math,
+		math = Button(frame2, text="Matikka",command=self.math,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
 		
 		# placing the button on the screen
@@ -308,7 +321,7 @@ class Menu:
 
 		# The first button is the Next button to move to the
 		# next Question
-		geo = Button(frame, text="Maantieto",command=self.geography,
+		geo = Button(frame2, text="Maantieto",command=self.geography,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
 		
 		# placing the button on the screen
@@ -316,20 +329,20 @@ class Menu:
 
 		# The first button is the Next button to move to the
 		# next Question
-		history = Button(frame, text="Historia",command=self.history,
+		history = Button(frame2, text="Historia",command=self.history,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
 		
 		# placing the button on the screen
 		history.place(x=355,y=200)
 
-		mixed = Button(frame, text="Sekoitus",command=self.mixed,
+		mixed = Button(frame2, text="Sekoitus",command=self.mixed,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
 		
 		# placing the button on the screen
 		mixed.place(x=355,y=250)
 		
 		# This is the second button which is used to Quit the GUI
-		quit_button = Button(frame, text="Quit", command=gui.destroy,
+		quit_button = Button(frame2, text="Quit", command=gui.destroy,
 		width=5,bg="black", fg="white",font=("ariel",16," bold"))
 		
 		# placing the Quit button on the screen
@@ -344,15 +357,11 @@ gui = Tk()
 # set the size of the GUI Window
 gui.geometry("850x450")
 
-gui.resizable(0, 0) 
+gui.resizable(0, 0)
 
-frame = Frame(gui)
-frame.pack(side="top", expand=True, fill="both")
+frame2 = Frame(gui)
 
-scale = Scale(frame, from_=1, to=15, command=Menu.on_scale_changed,
-font=("ariel",16,"bold"))
-scale.pack()
-scale.set('0')
+
 
 # set the title of the Window
 gui.title("Tietovisa")
