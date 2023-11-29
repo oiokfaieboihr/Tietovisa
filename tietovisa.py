@@ -10,7 +10,7 @@ from tkinter import messagebox as mb
 
 #import json to use json file for data
 import json
-
+from tkinter import filedialog
 import random
 
 #class to define the components of the GUI
@@ -132,6 +132,8 @@ class Quiz(Menu):
 			file = open("results.txt","a")
 
 			print( f"{self.correct} / {self.data_size}", file=file)
+			Menu.remove_line("results.txt",1)
+			file.close()
 			Menu()
 		else:
 			self.q_no = self.random_list[self.end]
@@ -243,11 +245,9 @@ class Quiz(Menu):
 class Menu:
 	def __init__(self):
 		frame2.pack(side="top", expand=True, fill="both")
-		scale = Scale(frame2, from_=1, to=15, command=Menu.on_scale_changed,
-		font=("ariel",16,"bold"))
-		scale.pack()
-		scale.set('0')
-		scale.place(x=270,y=113)
+
+		self.display_scale()
+		self.display_recent()
 		self.display_title()
 		self.display_guide()
 		self.display_buttons()
@@ -256,6 +256,59 @@ class Menu:
 	def clear(self):
 		for widgets in frame2.winfo_children():
 			widgets.destroy()
+	
+	def read_file_from_start(file_path):
+		try:
+			with open(file_path, 'r') as file:
+				content = file.readlines()
+				print(content)
+			return content
+		except FileNotFoundError:
+			return []
+		
+	def display_lines_in_label(file_path, self):
+		lines_from_start = Menu.read_file_from_start(file_path)
+		lines_from_start.reverse()  # Reverse the list to display lines in reverse order
+		self.lines_text = "".join(lines_from_start)
+		print(self.lines_text)
+
+	def remove_line(results,lineToSkip):
+		with open(results,'r') as read_file:
+			lines = read_file.readlines()
+		currentLine = 1
+		with open(results,'w') as write_file:
+
+			for line in lines:
+				if currentLine == lineToSkip:
+					pass
+				else:
+					write_file.write(line)
+				currentLine += 1
+
+
+	def display_recent(self):
+		file_path = "results.txt"
+
+		if file_path:
+			Menu.display_lines_in_label(file_path, self)
+
+
+		leaderboard_title = Label(frame2, text="Recent:\n",
+		width=9, font=("ariel", 16, "bold"))
+		# place of the title
+		leaderboard_title.place(x=0, y=100)
+
+		leaderboard = Label(frame2, text=self.lines_text,
+		width=10, justify='left', font=("ariel", 14, "bold"))
+		# place of the title
+		leaderboard.place(x=0, y=130)
+
+	def display_scale(self):
+		scale = Scale(frame2, from_=1, to=15, command=Menu.on_scale_changed,
+		font=("ariel",16,"bold"))
+		scale.pack()
+		scale.set('0')
+		scale.place(x=270,y=113)
 
 	def display_title(self):
 		
@@ -360,8 +413,6 @@ gui.geometry("850x450")
 gui.resizable(0, 0)
 
 frame2 = Frame(gui)
-
-
 
 # set the title of the Window
 gui.title("Tietovisa")
