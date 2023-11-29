@@ -78,15 +78,15 @@ class Quiz(Menu):
 	def display_result(self):
 		# calculates the wrong count
 		wrong_count = self.data_size - self.correct
-		correct = f"Correct: {self.correct}"
-		wrong = f"Wrong: {wrong_count}"
+		correct = f"Oikein: {self.correct}"
+		wrong = f"Väärin: {wrong_count}"
 		
 		# calcultaes the percentage of correct answers
 		score = int(self.correct / self.data_size * 100)
-		result = f"Score: {score}%"
+		result = f"Pisteet(%): {score}%"
 		
 		# Shows a message box to display the result
-		mb.showinfo("Results", f"{result}\n{correct}\n{wrong}")
+		mb.showinfo("Tulokset", f"{result}\n{correct}\n{wrong}")
 
 
 	# This method checks the Answer after we click on Next.
@@ -153,18 +153,18 @@ class Quiz(Menu):
 		
 		# The first button is the Next button to move to the
 		# next Question
-		next_button = Button(self.frame1, text="Next",command=self.next_btn,
+		next_button = Button(self.frame1, text="Seuraava",command=self.next_btn,
 		width=10,bg="blue",fg="white",font=("ariel",16,"bold"))
 		
 		# placing the button on the screen
 		next_button.place(x=350,y=380)
 		
 		# This is the second button which is used to Quit the GUI
-		quit_button = Button(self.frame1, text="Quit", command=gui.destroy,
-		width=5,bg="black", fg="white",font=("ariel",16," bold"))
+		quit_button = Button(self.frame1, text="Sammuta", command=gui.destroy,
+		width=8,bg="black", fg="white",font=("ariel",16," bold"))
 		
 		# placing the Quit button on the screen
-		quit_button.place(x=750,y=50)
+		quit_button.place(x=725,y=50)
 
 
 	# This method deselect the radio button on the screen
@@ -293,7 +293,7 @@ class Menu:
 			Menu.display_lines_in_label(file_path, self)
 
 
-		leaderboard_title = Label(frame2, text="Recent:\n",
+		leaderboard_title = Label(frame2, text="Viimeisin:\n",
 		width=9, font=("ariel", 16, "bold"))
 		# place of the title
 		leaderboard_title.place(x=0, y=100)
@@ -395,11 +395,11 @@ class Menu:
 		mixed.place(x=355,y=250)
 		
 		# This is the second button which is used to Quit the GUI
-		quit_button = Button(frame2, text="Quit", command=gui.destroy,
-		width=5,bg="black", fg="white",font=("ariel",16," bold"))
+		quit_button = Button(frame2, text="Sammuta", command=gui.destroy,
+		width=8,bg="black", fg="white",font=("ariel",16," bold"))
 		
 		# placing the Quit button on the screen
-		quit_button.place(x=750,y=50)
+		quit_button.place(x=725,y=50)
 
 
 
@@ -416,6 +416,19 @@ frame2 = Frame(gui)
 
 # set the title of the Window
 gui.title("Tietovisa")
+
+
+file_path = "results.txt"
+
+try:
+    with open(file_path, "r") as file:
+        content = file.read()
+
+except FileNotFoundError:
+    with open(file_path, "w") as file:
+        for i in range(1, 11):
+            file.write(f"\n")
+
 
 # get the data from the json file
 with open('data.json', encoding='utf-8') as f:
