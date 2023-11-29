@@ -27,23 +27,8 @@ class Quiz(Menu):
 		# set question number to 0
 		self.q_no=0
 		self.end=0
-		print(Menu.amount)
-		print(Menu.startpos)
-		print("Value: ", Menu.range)
 
-		self.random_list = []
-		
-		self.inputNumbers = range(Menu.startpos, Menu.range)
-
-		print("Value: ", self.inputNumbers)
-
-		self.random_list = random.sample(self.inputNumbers, Menu.amount)
-
-		self.q_no = self.random_list[self.end]
-
-		print(self.random_list)
-
-		
+		self.random_generator()
 		# assigns ques to the display_question function to update later.
 		self.display_title()
 		self.display_question()
@@ -71,6 +56,17 @@ class Quiz(Menu):
 	def clear(self):
 		for widgets in self.frame1.winfo_children():
 			widgets.destroy()
+
+
+	def random_generator(self):
+		self.random_list = []
+		
+		self.inputNumbers = range(Menu.startpos, Menu.range)
+
+		self.random_list = random.sample(self.inputNumbers, Menu.amount)
+
+		self.q_no = self.random_list[self.end]
+
 
 	# This method is used to display the result
 	# It counts the number of correct and wrong answers
@@ -117,8 +113,6 @@ class Quiz(Menu):
 
 		# print(self.q_no)
 		# print(self.random_list[self.end])
-
-		print(self.end, self.data_size, Menu.range, self.q_no)
 		
 		# checks if the q_no size is equal to the data size
 		if self.end==self.data_size:
@@ -184,12 +178,10 @@ class Quiz(Menu):
 			val+=1
 			
 
-
 	# This method shows the current Question on the screen
 	def display_question(self):
 		
 		# setting the Question properties
-		print(self.q_no)
 		q_no = Label(self.frame1, text=question[self.q_no], width=60,
 		font=( 'ariel' ,16, 'bold' ), anchor= 'w' )
 		
@@ -261,7 +253,6 @@ class Menu:
 		try:
 			with open(file_path, 'r') as file:
 				content = file.readlines()
-				print(content)
 			return content
 		except FileNotFoundError:
 			return []
@@ -270,7 +261,6 @@ class Menu:
 		lines_from_start = Menu.read_file_from_start(file_path)
 		lines_from_start.reverse()  # Reverse the list to display lines in reverse order
 		self.lines_text = "".join(lines_from_start)
-		print(self.lines_text)
 
 	def remove_line(results,lineToSkip):
 		with open(results,'r') as read_file:
@@ -343,7 +333,6 @@ class Menu:
 		self.clear()
 		Menu.startpos = 30
 		Menu.range = 60
-		print("Value: ", Menu.range)
 		Quiz()
 	def history(self):
 		self.clear()
@@ -357,8 +346,6 @@ class Menu:
 		Quiz()
 
 	def on_scale_changed(val):
-		print(Menu.amount)
-		
 		Menu.amount = int(val)
 
 	def display_buttons(self):
