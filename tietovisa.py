@@ -1,63 +1,64 @@
-# Python program to create a simple GUI
-# Simple Quiz using Tkinter
+# Yksinkertainen Tietovisa peli tkinterillä
+# Eliah San ja Pauli Eteläniemi 29.11.2023
 
-import tkinter as tk
-#import everything from tkinter
+# Lisätään tkinter moduulit
 from tkinter import *
-
-# and import messagebox as mb from tkinter
 from tkinter import messagebox as mb
 
-#import json to use json file for data
+# Json moduuli kysymysten käsittelyyn
 import json
-from tkinter import filedialog
+
+# Randomisointi moduuli
 import random
 
-#class to define the components of the GUI
+# Itse tietovisa luokka(Ikkuna tässä tapauksessa)
 class Quiz(Menu):
-	# This is the first method which is called when a
-	# new object of the class is initialized. This method
-	# sets the question count to 0. and initialize all the
-	# other methoods to display the content and make all the
-	# functionalities available
+	# Alustus funktio, joka nollaa ja sitten käynnistää eri aliohjelmat järjestyksessä
 	def __init__(self):
+
+		# Siivotaan vanha ikkuna(kanvas) ja luodaan uusi
+		Menu.clear(self)
 		frame2.pack_forget()
 		self.frame1 = Frame(gui)
 		self.frame1.pack(side="top", expand=True, fill="both")
-		# set question number to 0
+
+		# Nollataan muuttujat
 		self.q_no=0
 		self.end=0
 
+		# Kutsutaan funktiota, joka alustaa ja generoi satunnaistaulukon kysymyksiä varten
 		self.random_generator()
-		# assigns ques to the display_question function to update later.
+
+		# Kutsutaan funktioita. Toinen luo otsikon ja toinen kysymyksen
 		self.display_title()
 		self.display_question()
 		
-		# opt_selected holds an integer value which is used for
-		# selected option in a question.
+		# Valitun valintapainikkeen muuttuja on kokonaislukumuuttuja
 		self.opt_selected=IntVar()
 		
-		# displaying radio button for the current question and used to
-		# display options for the current question
+		# Valinta painikkeiden luonti varten
 		self.opts=self.radio_buttons()
 		
-		# display options for the current question
+		# Kutsutaan funktiota, joka luo valinnat
 		self.display_options()
 		
-		# displays the button for next and exit.
+		# Kutsutaan funktiota, joka luo poistumis- ja seuraavapainikkeen
 		self.buttons()
 		
-		# no of questions
+		# Määritetään kysymysten määrä, jotta tiedetään milloin kysymyksen on käyty läpi
 		self.data_size=Menu.amount
 		
-		# keep a counter of correct answers
+		# Alustetaan muuttuja oikeiden vastausten laskemiseen
 		self.correct=0
 
+	# Funktio, joka tyhjentää "ikkunan"(kanvaksen)vekottimet(widgets)
 	def clear(self):
 		for widgets in self.frame1.winfo_children():
 			widgets.destroy()
 
-
+	# Funktio alustaa taulukon johon se laittaa numeroita tiedyltä etäisyydeltä.
+	# Sekoittaa taulukon ja siten satunnaistaulukko on valmis
+	# Kysymyksiä kaapataan iteraatio muuttujan mukaan satunnaistaulukosta
 	def random_generator(self):
 		self.random_list = []
 		
@@ -68,187 +69,170 @@ class Quiz(Menu):
 		self.q_no = self.random_list[self.end]
 
 
-	# This method is used to display the result
-	# It counts the number of correct and wrong answers
-	# and then display them at the end as a message Box
+	# Funktio luo pikkuikkunan, jossa lukee tulokset
 	def display_result(self):
-		# calculates the wrong count
+		# Laskee väärin menneet
 		wrong_count = self.data_size - self.correct
 		correct = f"Oikein: {self.correct}"
 		wrong = f"Väärin: {wrong_count}"
 		
-		# calcultaes the percentage of correct answers
+		# Laskee prosentuaalisesti pisteet
 		score = int(self.correct / self.data_size * 100)
 		result = f"Pisteet(%): {score}%"
 		
-		# Shows a message box to display the result
+		# Luo pikku ikkunan, jossa näyttää tulokset
 		mb.showinfo("Tulokset", f"{result}\n{correct}\n{wrong}")
 
 
-	# This method checks the Answer after we click on Next.
+	# Tarkastaa onko oikea vastaus
 	def check_ans(self, q_no):
 		
-		# checks for if the selected option is correct
+		# Jos valittu painike vastaa oikeata vastausta, ohjelma palauttaa "Totta"
 		if self.opt_selected.get() == answer[q_no]:
-			# if the option is correct it return true
+			# Palauttaa "Totta"
 			return True
 
-	# This method is used to check the answer of the
-	# current question by calling the check_ans and question no.
-	# if the question is correct it increases the count by 1
-	# and then increase the question number by 1. If it is last
-	# question then it calls display result to show the message box.
-	# otherwise shows next question.
+	# Funktio kutsuu vastauksen tarkastus funktiota.
+	# Jos vastaus on oikein, inkrementoi muuttujaa eli lisää +1.
+	# Inkrementoi myös kysymys muuttuujaa, jotta voidaan mennä seuraavaan kysymykseen.
+	# Tarkastaa lopussa, että onko kaikki kysymykset käyty, jos käyty kutsuu tulos funktiota ja tyhjentää ikkunan takaisin paluuta varten
+	# Jos kaikkia kysymyksiä ei ole käyty läpi, menee seuravaan.
 	def next_btn(self):
 		
-		# Check if the answer is correct
+		# Jos vastaus "Totta", inkrementoi
 		if self.check_ans(self.q_no):
-			
-			# if the answer is correct it increments the correct by 1
 			self.correct += 1
 		
-		# Moves to next Question by incrementing the q_no counter
-
+		# Siirtyy seuraavaan kysymykseen
 		self.end+=1
-
-		# print(self.q_no)
-		# print(self.random_list[self.end])
 		
-		# checks if the q_no size is equal to the data size
+		# Jos kysymysten määrä ja inkrementoitu muuttuja vastaa toisia
+		# kaikki kysymykset on käyty
 		if self.end==self.data_size:
 			
-			# if it is correct then it displays the score
+			# Tulostaa tulokset pikkuikkunalle
 			self.display_result()
 			
+			# Tyhjentää "ikkunan"
 			self.clear()
 			self.frame1.pack_forget()
 			
+			# Avaa tekstitiedoston, johon syötetään tulokset
 			file = open("results.txt","a")
-
 			print( f"{self.correct} / {self.data_size}", file=file)
 			Menu.remove_line("results.txt",1)
 			file.close()
+
+			# Aloitetaan alusta ohjelma
 			Menu()
 		else:
+			# Vaihtaa kysymystä seuraavaan
 			self.q_no = self.random_list[self.end]
-			# shows the next question
+			# Tulostaa uuden kysymyksen
 			self.display_question()
 			self.display_options()
 
 
-	# This method shows the two buttons on the screen.
-	# The first one is the next_button which moves to next question
-	# It has properties like what text it shows the functionality,
-	# size, color, and property of text displayed on button. Then it
-	# mentions where to place the button on the screen. The second
-	# button is the exit button which is used to close the GUI without
-	# completing the quiz.
+	# Funktio luo Seuraava- ja Sammutapainikkeen
 	def buttons(self):
 		
-		# The first button is the Next button to move to the
-		# next Question
+		# Luo Seuraavapainikkeen
+		# Painettaessa kutsuu kysymysfunktiota, joka siirtää seuraavaan kysymykseen
 		next_button = Button(self.frame1, text="Seuraava",command=self.next_btn,
 		width=10,bg="blue",fg="white",font=("ariel",16,"bold"))
-		
-		# placing the button on the screen
 		next_button.place(x=350,y=380)
 		
-		# This is the second button which is used to Quit the GUI
+		# Luo Sammutapainikkeen
+		# Painettaessa tuhoaa koko ohjelman
 		quit_button = Button(self.frame1, text="Sammuta", command=gui.destroy,
 		width=8,bg="black", fg="white",font=("ariel",16," bold"))
-		
-		# placing the Quit button on the screen
 		quit_button.place(x=725,y=50)
 
 
-	# This method deselect the radio button on the screen
-	# Then it is used to display the options available for the current
-	# question which we obtain through the question number and Updates
-	# each of the options for the current question of the radio button.
+	# Nollaa valinnan ja luo vaihtoehdot silmukan avulla
 	def display_options(self):
 		val=0
 		
-		# deselecting the options
+		# Nollaa valinnan
 		self.opt_selected.set(0)
 		
-		# looping over the options to be displayed for the
-		# text of the radio buttons.
+		# Silmukka tulostaa vaihtoehdot
 		for option in options[self.q_no]:
 			self.opts[val]['text']=option
 			val+=1
 			
 
-	# This method shows the current Question on the screen
+	# Tulostaa kysymyksen
 	def display_question(self):
-		
-		# setting the Question properties
 		q_no = Label(self.frame1, text=question[self.q_no], width=60,
 		font=( 'ariel' ,16, 'bold' ), anchor= 'w' )
-		
-		#placing the option on the screen
 		q_no.place(x=70, y=100)
 
 
-	# This method is used to Display Title
+	# Tulostaa otsikon
 	def display_title(self):
-		
-		# The title to be shown
 		title = Label(self.frame1, text="Tietovisa",
 		width=50, bg="blue",fg="white", font=("ariel", 20, "bold"))
-		# place of the title
 		title.place(x=0, y=2)
 
 
-	# This method shows the radio buttons to select the Question
-	# on the screen at the specified position. It also returns a
-	# list of radio button which are later used to add the options to
-	# them.
+	# Tulostaa valintapainikkeet
 	def radio_buttons(self):
 		
-		# initialize the list with an empty list of options
+		# Alustaa taulukon
 		q_list = []
 		
-		# position of the first option
+		# Ensimmäisen valintapainikkeen sijainti
 		y_pos = 150
 		
 		# adding the options to the list
 		while len(q_list) < 4:
 			
-			# setting the radio button properties
+			# Painikkeen määritys
 			radio_btn = Radiobutton(self.frame1,text=" ",variable=self.opt_selected,
 			value = len(q_list)+1,font = ("ariel",14))
 			
-			# adding the button to the list
+			# Painike lisätään listaan
 			q_list.append(radio_btn)
 			
-			# placing the button
+			# Valitaan painikkeen paikka
 			radio_btn.place(x = 100, y = y_pos)
 			
-			# incrementing the y-axis position by 40
+			# Inkrementoidaan Y-askelia, jotta painikkeet menevät tasaisesti paikoilleen
 			y_pos += 40
 		
-		# return the radio buttons
+		# Palautetaan lista, jossa painikkeiden määritys sekä sijainti
 		return q_list
 	
 
 
 
-
+# Valikon luokka/ikkuna
 class Menu:
+	# Alustus funktio
 	def __init__(self):
+		# Luo kanvaksen valikolle
 		frame2.pack(side="top", expand=True, fill="both")
 
+		# Tulostaa baarin/sliderin, jolla voi valita kysymysten määrän
 		self.display_scale()
+		# Tulostaa aikaisemman tuloksen
 		self.display_recent()
+		# Tulostaa otsikon
 		self.display_title()
+		# Tulostaa "ohjeistuksen"
 		self.display_guide()
+		# Tulostaa painikkeet
 		self.display_buttons()
-		#self.display_menu()
 	
+
+	# Tuhoaa widgetit
 	def clear(self):
 		for widgets in frame2.winfo_children():
 			widgets.destroy()
 	
+
+	# Avaa results.txt ja pistää sisällön muuttujaan tarkastelua ja tulostusta varten
 	def read_file_from_start(file_path):
 		try:
 			with open(file_path, 'r') as file:
@@ -256,12 +240,15 @@ class Menu:
 			return content
 		except FileNotFoundError:
 			return []
-		
+	
+	# Tarkastelee results.txt, kääntää rivien järjestyksen
+	# kiinnittää eri rivit yhdeksi stringiksi, jotta sitä voi paremmin tulostaa
 	def display_lines_in_label(file_path, self):
 		lines_from_start = Menu.read_file_from_start(file_path)
-		lines_from_start.reverse()  # Reverse the list to display lines in reverse order
+		lines_from_start.reverse()
 		self.lines_text = "".join(lines_from_start)
 
+	# Poistaa ensimmäisen rivin results.txt tiedosta, jotta 10 riviä vain tallentuu
 	def remove_line(results,lineToSkip):
 		with open(results,'r') as read_file:
 			lines = read_file.readlines()
@@ -275,24 +262,23 @@ class Menu:
 					write_file.write(line)
 				currentLine += 1
 
-
+	# Tulostaa aikaisemmat tulokset
 	def display_recent(self):
 		file_path = "results.txt"
 
 		if file_path:
 			Menu.display_lines_in_label(file_path, self)
 
-
 		leaderboard_title = Label(frame2, text="Viimeisin:\n",
 		width=9, font=("ariel", 16, "bold"))
-		# place of the title
 		leaderboard_title.place(x=0, y=100)
 
+		# Tulostaa kaikki 10 riviä
 		leaderboard = Label(frame2, text=self.lines_text,
 		width=10, justify='left', font=("ariel", 14, "bold"))
-		# place of the title
 		leaderboard.place(x=0, y=130)
 
+	# Tulostaa sliderin ja päivittää ainakun siihen koskettaa
 	def display_scale(self):
 		scale = Scale(frame2, from_=1, to=15, command=Menu.on_scale_changed,
 		font=("ariel",16,"bold"))
@@ -300,113 +286,93 @@ class Menu:
 		scale.set('0')
 		scale.place(x=270,y=113)
 
+	# Tulostaa otsikon
 	def display_title(self):
-		
-		# The title to be shown
 		title = Label(frame2, text="Tietovisa",
 		width=50, bg="blue",fg="white", font=("ariel", 20, "bold"))
-		# place of the title
 		title.place(x=0, y=2)
 
+	# Tulostaa opastavat tekstit
 	def display_guide(self):
-		
-		# setting the Question properties
 		q = Label(frame2, text="Valitse aihe:",
 		width=71, fg="black", font=("ariel", 14, "bold"))
-		
-		#placing the option on the screen
 		q.place(x=0, y=50)
 
-		# setting the Question properties
 		amount = Label(frame2, text="Määrä:",
 		font=("ariel", 14, "bold"))
-		
-		#placing the option on the screen
 		amount.place(x=200, y=150)
 
+	# Funktiot osa-alueen valintaa varten sekä kysymykset tietyltä välilä
 	def math(self):
-		self.clear()
 		Menu.startpos = 0
 		Menu.range = 30
 		Quiz()
 	def geography(self):
-		self.clear()
 		Menu.startpos = 30
 		Menu.range = 60
 		Quiz()
 	def history(self):
-		self.clear()
 		Menu.startpos = 60
 		Menu.range = 90
 		Quiz()
 	def mixed(self):
-		self.clear()
 		Menu.startpos = 0
 		Menu.range = 90
 		Quiz()
 
+	# Muuttaa sliderin lukua reaaliajassa
 	def on_scale_changed(val):
 		Menu.amount = int(val)
 
+	# Tulostaa osa-alueen valintaa varten painikkeet
 	def display_buttons(self):
 		Menu.amount = 1
 
-		# The first button is the Next button to move to the
-		# next Question
+		# Matikka
 		math = Button(frame2, text="Matikka",command=self.math,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
-		
-		# placing the button on the screen
 		math.place(x=355,y=100)
 
-		# The first button is the Next button to move to the
-		# next Question
+		# Biologia
 		geo = Button(frame2, text="Maantieto",command=self.geography,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
-		
-		# placing the button on the screen
 		geo.place(x=355,y=150)
 
-		# The first button is the Next button to move to the
-		# next Question
+		# Historia
 		history = Button(frame2, text="Historia",command=self.history,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
-		
-		# placing the button on the screen
 		history.place(x=355,y=200)
 
+		# Sekoitus
 		mixed = Button(frame2, text="Sekoitus",command=self.mixed,
 		width=10, bg="red", fg="white",font=("ariel",16,"bold"))
-		
-		# placing the button on the screen
 		mixed.place(x=355,y=250)
 		
-		# This is the second button which is used to Quit the GUI
+		# Sammutuspainike
 		quit_button = Button(frame2, text="Sammuta", command=gui.destroy,
 		width=8,bg="black", fg="white",font=("ariel",16," bold"))
-		
-		# placing the Quit button on the screen
 		quit_button.place(x=725,y=50)
 
 
 
 
-# Create a GUI Window
+# Luo ikkunan
 gui = Tk()
 
-# set the size of the GUI Window
+# Määritetään ikkunan koko ja että voi muokata
 gui.geometry("850x450")
-
 gui.resizable(0, 0)
 
+# Määritetään kanvas ikkunalle
 frame2 = Frame(gui)
 
-# set the title of the Window
+# Ikkunan nimi
 gui.title("Tietovisa")
 
-
+# Tulosten tiedosto
 file_path = "results.txt"
 
+# Kun ikkuna luodaan, tarkistetaan onko jo tulostiedostoa luotu, jos ei luo tiedoston ja lisää yksitoista riviä
 try:
     with open(file_path, "r") as file:
         content = file.read()
@@ -417,19 +383,17 @@ except FileNotFoundError:
             file.write(f"\n")
 
 
-# get the data from the json file
+# Hakee kysymys tiedot json tiedostosta
 with open('data.json', encoding='utf-8') as f:
 	data = json.load(f)
 
-# set the question, options, and answer
+# Laitetaan taulukoiden sisällöt kolmeen eri muuttujaan
 question = (data['question'])
 options = (data['options'])
 answer = (data[ 'answer'])
 
-# create an object of the Quiz Class.
+# Aloitetaan ohjelma käynnistämällä valikkoluokka/ikkuna
 menu = Menu()
 
-# Start the GUI
+# Aloittaa ohjelman
 gui.mainloop()
-
-# END OF THE PROGRAM
